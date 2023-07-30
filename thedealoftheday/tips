@@ -1,0 +1,13 @@
+Gospers Hack!!
+
+int set = (1 << k) - 1;
+int limit = (1 << n);
+while (set < limit)
+{
+    DoStuff(set);
+
+    // Gosper's hack:
+    int c = set & - set;
+    int r = set + c;
+    set = (((r ^ set) >> 2) / c) | r;
+}

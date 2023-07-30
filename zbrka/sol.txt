@@ -1,0 +1,27 @@
+dp[n][c] = # number of permutations of 1..n with exactly c inversions
+
+dp[n+1][c+n] += dp[n][c] # place n+1 in front to generate n inversions
+dp[n+1][c+n-1] += dp[n][c] # place n+1 after first to generate n-1 inversions
+dp[n+1][c+n-2] += dp[n][c] # place n+1 after second to generate n-2 inversions
+...
+dp[n+1][c] += dp[n][c] # place n+1 after all elements to generate 0 inversions
+
+for each i, store dp[i] = FenwickTree(c+1 modints)
+
+dp[1][0] = 1
+dp[1][j] = 0 for j > 0 # cannot have inversions with only 1 element
+
+so
+
+add 1 to dp[1][0]
+add -1 to dp[1][1]
+
+for each i in 1..n-1:
+    for each j in 0..c:
+        add dp[i][j] to dp[i+1][j]
+        add -dp[i][j] to dp[i+1][j+i+1]
+
+to get dp[i][j] just dp[i].query(j)
+
+with input n,c:
+    ans = dp[n][c]

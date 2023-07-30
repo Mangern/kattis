@@ -1,0 +1,7 @@
+python 
+from collections import Counter
+or
+from collections import Counter as freq
+
+s: str
+freq(s).most_common() // tuple of (char, cnt) in non-increasing order of cnt

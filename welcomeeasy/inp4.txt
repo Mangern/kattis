@@ -1,0 +1,2 @@
+1
+f you read the previous paragraph youre probably wondering why its there ut if you read it very carefully you might notice that we have written the words welcome to code jam several timestimes in total fter all its easy to look through the paragraph and find a w then find an e later in the paragraph then find an l after that and so on our task is to write a program that can take any text and print out how many times that text contains the phrase welcome to code jam

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if (($# < 1))
+then
+    echo "Too few arguments"
+else
+    mkdir $1
+    cd $1
+    gen_cpp main
+    vim main.cpp 
+fi
+

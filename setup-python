@@ -1,0 +1,10 @@
+#!/bin/bash
+if (($# < 1))
+then
+    echo "Too few arguments"
+else
+    mkdir $1
+    cd $1
+    > main.py
+    vim main.py 
+fi

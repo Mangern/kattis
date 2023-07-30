@@ -1,0 +1,115 @@
+// SILLY SILLY do binary search yo
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using vi = vector<int>;
+using vll = vector<ll>;
+template<typename t, size_t N>
+using ar = array<t,N>;
+using ii = ar<ll,2>;
+using vii = vector<ii>;
+using ld = long double;
+
+#define all(v) begin(v), end(v)
+
+const int INF = numeric_limits<int>::max();
+const ll INFLL = numeric_limits<ll>::max();
+
+mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
+ll myRand(ll B) {
+	return (unsigned ll)rng() % B;
+}
+template<typename t>
+istream& operator >> (istream& in, vector<t>& vec) {
+    for (t& x : vec)in >> x;
+    return in;
+}
+
+template<typename t>
+ostream& operator << (ostream& out, vector<t>& vec) {
+    int n = (int)vec.size();
+    for (int i = 0; i < n; ++i) {
+        out << vec[i];
+        if (i < n - 1)out << " ";
+    }
+    return out;
+}
+
+// t should support min-function (operator <)
+template<typename t>
+t min(const vector<t>& vec) {
+    t ans = vec[0];
+    for (const auto& el : vec) {
+        ans = min(ans, el);
+    }
+    return ans;
+}
+
+// t should support max-function (operator <)
+template<typename t>
+t max(const vector<t>& vec) {
+    t ans = vec[0];
+    for (const auto& el : vec) {
+        ans = max(ans, el);
+    }
+    return ans;
+}
+const int mxN = 3e4+3;
+
+void testCase() {
+    ll n, k;
+    cin >> n >> k;
+
+    vll vals(2*n*k);
+    cin >> vals;
+    sort(all(vals));
+
+    ll lo = 0, hi = 1e9 ;
+
+    auto check = [&] (ll d) {
+        ll up = 0;
+        ll cnt = 0;
+        ll i = 0;
+
+        while (cnt < n) {
+            if (i > up)return false;
+
+            if (vals[i+1] - vals[i] <= d) {
+                ++cnt;
+                up += 2*k;
+                ++i;
+            }
+            ++i;
+        }
+        return true;
+    };
+
+    while (lo < hi) {
+        ll mid = (hi+lo)/2;
+
+        if (!check(mid)) {
+            lo = mid + 1;
+        } else hi = mid;
+    }
+    cout << lo << endl;
+}
+
+void setIO() {
+    cin.tie(0)->sync_with_stdio(0);
+}
+
+void pre() {
+
+}
+
+int main() {
+    setIO();
+    pre();
+    int t = 1;
+    //cin >> t;
+
+    for (int tc = 1; tc <= t; ++tc) {
+        testCase();
+    }
+    return 0;
+}
