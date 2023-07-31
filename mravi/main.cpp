@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <iomanip>
 using namespace std;
 
 using ld = long double;
@@ -47,6 +48,6 @@ int main() {
         }
         ans = max(ans, curr);
     }
-    cout << ans << endl;
+    cout << setprecision(10) << fixed << ans << endl;
 
 }
