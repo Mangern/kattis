@@ -16,7 +16,7 @@ const ll INFLL = numeric_limits<ll>::max();
 
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 ll myRand(ll B) {
-	return (unsigned ll)rng() % B;
+	return (unsigned long long)rng() % B;
 }
 template<typename t>
 istream& operator >> (istream& in, vector<t>& vec) {
@@ -69,6 +69,7 @@ void testCase() {
 
         cout << max(x[i] - c*i + mx1, -x[i] - c*i + mx2) << " ";
     }
+
     cout << endl;
 }
 
@@ -85,6 +86,7 @@ int main() {
     pre();
     int t = 1;
     //cin >> t;
+
 
     for (int tc = 1; tc <= t; ++tc) {
         testCase();

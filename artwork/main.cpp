@@ -16,7 +16,7 @@ const ll INFLL = numeric_limits<ll>::max();
 
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 ll myRand(ll B) {
-	return (unsigned ll)rng() % B;
+	return (unsigned long long)rng() % B;
 }
 template<typename t>
 istream& operator >> (istream& in, vector<t>& vec) {
