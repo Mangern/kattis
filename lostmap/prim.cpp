@@ -1,5 +1,7 @@
-#pragma GCC optimize("Ofast", "unroll-loops")
+#include <queue>
+#pragma GCC optimize("Ofast")
 #include <bits/stdc++.h>
+#include <ext/pb_ds/priority_queue.hpp>
 using namespace std;
 using ll = long long;
 using vi = vector<int>;
@@ -54,8 +56,10 @@ t max(const vector<t>& vec) {
 }
 struct UnionFind {
     vi p, rnk;
+    int num_sets;
     UnionFind(int n) {
         p = vi(n);
+        num_sets = n;
         iota(all(p),0);
         rnk = vi(n,0);
     }
@@ -81,32 +85,61 @@ struct UnionFind {
                 ++rnk[i];
             }
         }
+        --num_sets;
         return 1;
     }
 };
-const int mxN = 3e4+3;
+const int mxN = 2501;
+const int mxM = 3223800;
+
+struct Edge {
+    ll w;
+    int u;
+    int v;
+
+    bool operator<(const Edge& other) const {
+        return w > other.w;
+    }
+};
+
+ll weight[mxN][mxN];
 
 void testCase() {
     int n;
     cin >> n;
-    vector<ar<ll,3>> edge;
+    int m = (n * (n - 1))>>1;
+
+    // n - 1 els, 
+    // n-2 els
+    //
+
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
-            ll w;
-            cin >> w;
-            if (j > i) {
-                edge.push_back({w,i,j});
-            }
+            cin >> weight[i][j];
         }
     }
 
-    sort(all(edge));
-
     UnionFind uf(n);
 
-    for (auto [w,u,v] : edge) {
-        if (uf.join(u,v)) {
-            cout <<u+1 << " " << v+1 << "\n";
+    priority_queue<Edge> pq;
+
+    set<int> out;
+    for (int j = 1; j < n; ++j) {
+        pq.push({weight[0][j], 0, j});
+        out.insert(j);
+    }
+
+
+    while (pq.size() && uf.num_sets > 1) {
+        auto e = pq.top();
+        int u = e.u;
+        int v = e.v;
+        pq.pop();
+        if (!uf.join(u, v))continue;
+        cout << u+1 << " " << v+1 << "\n";
+        out.erase(v);
+        for (int z : out) {
+            pq.push({weight[v][z], v, z});
         }
     }
 }
