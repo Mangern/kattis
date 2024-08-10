@@ -74,7 +74,7 @@ const int mxN = 2e4+6;
 const ll MOD  = 1e9+7;
 
 ll a[101];
-ll dp[101][mxN];
+ll dp[mxN];
 
 void testCase() {
     ll goal;
@@ -87,24 +87,21 @@ void testCase() {
         cin >> a[i];
     }
 
-    for (int i = 0; i <= n; ++i) {
-        for (int j = 0; j < mxN; ++j) {
-            dp[i][j] = INF;
-        }
+    for (int i = 0; i < mxN; ++i) {
+        dp[i] = INF;
     }
 
-    dp[0][0] = 0;
+    dp[0] = 0;
 
     for (int j = 0; j < n; ++j) {
-        memcpy(dp[j+1], dp[j], sizeof dp[j]);
-        for (int i = 0; i <= goal; ++i) {
-            dp[j+1][i+a[j]] = min(dp[j+1][i+a[j]], dp[j][i] + 1);
+        for (int i = goal; i >= 0; --i) {
+            dp[i+a[j]] = min(dp[i+a[j]], dp[i] + 1);
         }
     }
 
     for (int i = goal; i < mxN; ++i) {
-        if (dp[n][i] < INF) {
-            cout << i << " " << dp[n][i] << endl;
+        if (dp[i] < INF) {
+            cout << i << " " << dp[i] << endl;
             return;
         }
     }
