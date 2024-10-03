@@ -5,7 +5,7 @@ using namespace std;
 using vi = vector<int>;
 using ll = long long;
 
-const ll INF = numeric_limits<ll>::max();
+const ll INF = 2e9;
 
 void solve(int n) {
     ++n;
@@ -28,7 +28,7 @@ void solve(int n) {
     }
     adj[0].push_back(1);
 
-    edge.push_back({0, 1, -100});
+    edge.push_back({0, 1, -100-val[1]});
 
     for (int u = 1; u < n; ++u) {
         for (auto v : adj[u]) {
@@ -38,48 +38,29 @@ void solve(int n) {
     }
 
     vector<ll> dist(n, INF);
+    vector<bool> good(n, 0);
     dist[0] = 0;
-    for (int i = 0; i < n - 1; ++i) {
+    for (int i = 0; i < n; ++i) {
         for (auto [u, v, w] : edge) {
-            if (dist[u] != INF && dist[u] + w < dist[v]) {
-                dist[v] = dist[u] + w;
+            if (dist[u] < INF && dist[u] + w < 0) {
+                dist[v] = min(dist[v], dist[u] + w);
             }
         }
     }
 
-    if (dist[n-1] == INF) {
-        cout << "hopeless" << endl;
-        return;
-    }
-
-    vector<bool> good(n, 0);
-
-    for (auto [u, v, w] : edge) {
-        if (dist[u] != INF && dist[u] + w < dist[v]) {
-            good[u] = 1;
+    bool flag = 1;
+    
+    while (flag) {
+        flag = 0;
+        for (auto [u, v, w] : edge) if (dist[u] != INF) {
+            if (dist[u] + w < dist[v] && !good[v] && dist[u] + w < 0) {
+                dist[v] = -INF;
+                flag = 1;
+                good[v] = 1;
+            }
         }
     }
-
-
-    good[n-1] = 1;
-    queue<int> q;
-    q.push(0);
-    vector<bool> vis(n, 0);
-    vis[0] = 1;
-    while (q.size()) {
-        int u = q.front();
-        if (good[u]) {
-            cout << "winnable" << endl;
-            return;
-        }
-        q.pop();
-        for (auto v : adj[u]) if (dist[v] < 0 && !vis[v]) {
-            vis[v] = 1;
-            q.push(v);
-        }
-    }
-
-    cout << "hopeless" << endl;
+    cout << ((dist[n-1] < 0 || good[n-1]) ? "winnable" : "hopeless") << endl;
 }
 
 int main() {
