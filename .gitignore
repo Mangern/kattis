@@ -2,3 +2,4 @@ KATTIS_OFFLINE/
 */a.out
 **/*.class
 **/*.in
+*/*.o
