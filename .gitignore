@@ -3,3 +3,4 @@ KATTIS_OFFLINE/
 **/*.class
 **/*.in
 */*.o
+*/main
