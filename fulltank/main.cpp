@@ -1,5 +1,7 @@
 #include <bits/stdc++.h>
 #include <bits/extc++.h>
+#include <ext/pb_ds/tag_and_trait.hpp>
+#include <queue>
 using namespace std;
 using ll = long long;
 using ii = array<ll, 2>;
@@ -58,7 +60,7 @@ int main() {
         ll s, e, c;
         scanf("%lld%lld%lld", &c, &s, &e);
 
-        __gnu_pbds::priority_queue<el> pq;
+        priority_queue<el> pq;
         dist[s] = 0;
         pq.push({0, s});
 
