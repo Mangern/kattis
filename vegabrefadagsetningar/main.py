@@ -1,0 +1,5 @@
+d,m,m2,y=input().split()
+yr = 2000 + int(y)
+d = int(d)
+mn = ["","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"].index(m2[1:])
+print(f"{yr}-{mn:02d}-{d:02d}")
