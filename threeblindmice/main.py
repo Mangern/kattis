@@ -1,0 +1,12 @@
+d=int(input())
+sw=int(input())
+s1=int(input())
+s2=int(input())
+s3=int(input())
+t1=d/(s1+sw)
+ans=2*t1*s1
+t2=d/(s2+sw)
+ans+=2*t2*s2
+t3=d/(s3+sw)
+ans+=2*t3*s3
+print(round(ans))
