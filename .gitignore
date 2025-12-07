@@ -4,3 +4,4 @@ KATTIS_OFFLINE/
 **/*.in
 */*.o
 */main
+**/*.beam
