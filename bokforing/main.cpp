@@ -45,7 +45,6 @@ int main() {
         if (s == "SET") {
             ll i, x;
             cin >> i >> x;
-            t++;
             push(i, x);
         } else if (s == "RESTART") {
             cin >> curw;
