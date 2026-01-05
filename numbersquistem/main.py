@@ -1,0 +1,7 @@
+input()
+s=input()
+s=s.replace("<]:=", "0")
+s=s.replace("/", "//")
+ret=str(eval(s))
+ret = ret.replace("0", "<]:=")
+print(ret)
