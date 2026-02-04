@@ -13,41 +13,43 @@ int grundy_rect(int n, int m) {
 
     int &r = dp_rect[key];
 
+    const int mreach = 40;
+    bitset<mreach> reach;
+
+    auto insert = [&] (int g) {
+        if (g >= mreach) return;
+        reach.set(g);
+    };
+
     if (n == 1) {
         assert(m > 1);
         if (m == 2) {
             return r = 0;
         }
 
-        set<int> reach;
         for (int i = 2; i < m - 1; ++i) {
             int g1 = grundy_rect(n, i);
             int g2 = grundy_rect(n, m - i);
             int g = g1 ^ g2;
-            reach.insert(g);
+            insert(g);
         }
-        int mex = 0;
-        while (reach.count(mex))++mex;
-        return r = mex;
+        return r = (~reach)._Find_first();
     }
 
-    set<int> reach;
 
     for (int i = 1; i < n; ++i) {
         int g1 = grundy_rect(i, m);
         int g2 = grundy_rect(n - i, m);
         int g = g1 ^ g2;
-        reach.insert(g);
+        insert(g);
     }
     for (int i = 1; i < m; ++i) {
         int g1 = grundy_rect(n, i);
         int g2 = grundy_rect(n, m - i);
         int g = g1 ^ g2;
-        reach.insert(g);
+        insert(g);
     }
-    int mex = 0;
-    while (reach.count(mex))++mex;
-    return r = mex;
+    return r = (~reach)._Find_first();
 }
 
 // w1: width left of stick
@@ -75,7 +77,13 @@ int grundy(int w1, int w2, int h1, int h2, int s) {
     if (dp[key] != -1) return dp[key];
     int &r = dp[key];
 
-    set<int> reach;
+    const int mreach = 120;
+    bitset<mreach> reach;
+
+    auto insert = [&] (int g) {
+        if (g >= mreach) return;
+        reach.set(g);
+    };
 
     // horizontal cut on left side
     for (int i = 1; h1 - i >= s; ++i) {
@@ -84,14 +92,14 @@ int grundy(int w1, int w2, int h1, int h2, int s) {
 
         int g1 = grundy_rect(i, w1);
         int g2 = grundy(w1, w2, h1 - i, h2, s);
-        reach.insert(g1 ^ g2);
+        insert(g1 ^ g2);
     }
     // horizontal cut on right side
     for (int i = 1; h2 - i >= s; ++i) {
         if (i == 1 && w2 == 1) continue;
         int g1 = grundy_rect(i, w2);
         int g2 = grundy(w1, w2, h1, h2 - i, s);
-        reach.insert(g1 ^ g2);
+        insert(g1 ^ g2);
     }
 
     // horizontal cut above stick
@@ -99,7 +107,7 @@ int grundy(int w1, int w2, int h1, int h2, int s) {
         if (i == 1 && w1 + w2 == 1) continue; // not even possible i think
         int g1 = grundy_rect(i, w1 + w2);
         int g2 = grundy(w1, w2, h1 - i, h2 - i, s - i);
-        reach.insert(g1 ^ g2);
+        insert(g1 ^ g2);
     }
 
     // vertical left side
@@ -108,12 +116,12 @@ int grundy(int w1, int w2, int h1, int h2, int s) {
         if (i == 1 && h1 == 1) continue; // ...
         int g1 = grundy_rect(i, h1);
         int g2 = grundy(w1 - i, w2, h1, h2, s);
-        reach.insert(g1 ^ g2);
+        insert(g1 ^ g2);
     }
 
     // vertical cut center
     if (!(w1 == 1 && h1 == 1) && !(w2 == 1 && h2 == 1)) {
-        reach.insert(
+        insert(
             grundy_rect(w1, h1) ^ grundy_rect(w2, h2)
         );
     }
@@ -123,12 +131,9 @@ int grundy(int w1, int w2, int h1, int h2, int s) {
         if (i == 1 && h2 == 1) continue;
         int g1 = grundy_rect(i, h2);
         int g2 = grundy(w1, w2 - i, h1, h2, s);
-        reach.insert(g1 ^ g2);
+        insert(g1 ^ g2);
     }
-
-    int mex = 0;
-    while (reach.count(mex))++mex;
-    return r = mex;
+    return r = (~reach)._Find_first();
 }
 
 int main() {
