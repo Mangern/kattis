@@ -1,0 +1,6 @@
+s=input()
+s = s.replace("bauk","dos")
+s = s.replace("flatbaka","petsa")
+s = s.replace("k","g")
+s = s.replace("y","u")
+print(s)
