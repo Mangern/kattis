@@ -10,27 +10,16 @@ bool vis[mxN];
 int t = 0;
 vi L;
 
-void dfs(int cf = -1) {
-    int u = L[t];
-
-    if (vis[u])return;
-
+void dfs(int u) {
     vis[u] = 1;
-    if (t == L.size() - 1) {
-        return;
+    while (t < n && adj[u].count(L[t])) {
+        adj[u].erase(L[t]);
+        dfs(L[t++]);
     }
-
-    adj[u].erase(cf);
-
-    while (adj[u].size()) {
-        if (!adj[u].count(L[t+1])) {
-    }
-
     for (int v : adj[u]) {
-        if (t+1 == n)return;
-        if (v == L[t+1]) {
-            ++t;
-            dfs(u);
+        if (!vis[v]) {
+            cout << "NO" << endl;
+            exit(0);
         }
     }
 }
@@ -58,7 +47,7 @@ int main() {
         return 0;
     }
 
-    dfs();
+    dfs(L[t++]);
 
     for (int i = 0; i < n; ++i)if (!vis[i]) {
         cout << "NO" << endl;
