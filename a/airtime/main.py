@@ -1,0 +1,1 @@
+a=list(map(int,open(0)))[1:];print(sum(2*y>z+x for x,y,z in zip(a,a[1:],a[2:])))
