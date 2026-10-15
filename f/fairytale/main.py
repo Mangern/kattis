@@ -1,1 +1,1 @@
-for _ in range(int(input())):input();print(len(set((x-1)//10 for x in map(int,input().split()))))
+for l in[*open(0)][2::2]:print(len({~-int(x)//10for x in l.split()}))
